@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:14.11 # Use the PostgreSQL image
+    ports:
+      - "5432:5432" # Map container port 5432 to host port 5432
+    environment:
+       POSTGRES_DB: 'django' # Set the name of the PostgreSQL database
+       POSTGRES_USER: 'django' # Set the PostgreSQL username
+       POSTGRES_PASSWORD: 'django' # Set the PostgreSQL password
+    volumes:
+      - ./docker/postgres/data:/var/lib/postgresql/data  # Persist PostgreSQL data
+    networks:
+      - app
+
+  web:
+    build: .
+    command: ./wait-for-it.sh db:5432 -- python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/django_register
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    links:
+      - db
+    networks:
+      - app
+    environment:
+      - PYTHONUNBUFFERED=1
+
+networks:
+  app:
+    driver: bridge
