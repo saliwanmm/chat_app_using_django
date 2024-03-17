@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Users apps
     "main",
+    "chat_room",
+    "message",
 ]
 
 AUTH_USER_MODEL = 'main.CustomUser'

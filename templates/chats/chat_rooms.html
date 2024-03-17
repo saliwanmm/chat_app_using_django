@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Here will be all chat-rooms </h1>
+
+    <h3>
+        <a class="links2" href="{% url 'creat_room' %}">Create new room</a>
+    </h3>
+
+    <div class="accordion" id="accordionExample">
+        {% for chat in chats %}
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                        {{ chat.title }}
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        {{ chat.description }}
+                        <a href="{% url 'open_room' id=chat.id %}" class="links2">Open chat</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

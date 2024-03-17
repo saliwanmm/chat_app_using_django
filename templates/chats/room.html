@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Chat-room "{{ room.title }}"</h1>
+    <h3>{{ room.description }}</h3>
+    <a href="{% url 'chat_rooms' %}" class="links2">Leave chat</a>
+</div>
+{% endblock %}
