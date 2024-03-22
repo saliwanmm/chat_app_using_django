@@ -36,6 +36,10 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    # Other apps
+    "channels",
+    "daphne",
+    # General apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +51,27 @@ INSTALLED_APPS = [
     "chat_room",
     "message",
 ]
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('redis', 6379)],
+        },
+    },
+}
+
+# Add your frontend domain to CORS_ALLOW_ORIGIN if applicable
+CORS_ALLOW_ORIGIN = [
+    "http://localhost:8000",  # Adjust the domain/port accordingly
+]
+# CHANNEL_LAYERS = {
+# 	"default": {
+# 		"BACKEND": "channels.layers.InMemoryChannelLayer"
+# 	}
+# }
+
+ASGI_APPLICATION = 'django_register.asgi.application'
 
 AUTH_USER_MODEL = 'main.CustomUser'
 

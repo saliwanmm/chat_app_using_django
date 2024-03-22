@@ -1,4 +1,6 @@
 from django.shortcuts import redirect, render
+
+from message.models import MessageModel
 from .models import ChatRoomModel
 
 
@@ -21,7 +23,7 @@ def creat_room_View(request):
     
 
 def open_room_View(request, id):
-    room = ChatRoomModel.objects.get(id=id)
-    return render(request, "chats/room.html", {
-        "room": room,
-    })
+    room_id = ChatRoomModel.objects.get(id=id).id
+    messages = MessageModel.objects.filter(room=ChatRoomModel.objects.get(id=id))
+    context = {"id":id, "room_id": room_id, "messages": messages}
+    return render(request, "chats/room.html", context)

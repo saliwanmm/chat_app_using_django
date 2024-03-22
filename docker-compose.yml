@@ -1,6 +1,21 @@
 version: '3'
 
 services:
+  daphne:
+    build: .
+    command: /usr/local/bin/daphne -b 0.0.0.0 -p 8001 django_register.asgi:application
+    volumes:
+      - .:/django_register
+    ports:
+      - "8001:8001"
+    depends_on:
+      - db
+      - redis
+    networks:
+      - app
+    environment:
+      - PYTHONUNBUFFERED=1
+
   db:
     image: postgres:14.11 # Use the PostgreSQL image
     ports:
@@ -14,6 +29,13 @@ services:
     networks:
       - app
 
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - app
+
   web:
     build: .
     command: ./wait-for-it.sh db:5432 -- python manage.py runserver 0.0.0.0:8000
@@ -23,8 +45,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    links:
-      - db
+      - redis
     networks:
       - app
     environment:
