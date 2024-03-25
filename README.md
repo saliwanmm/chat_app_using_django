@@ -6,11 +6,16 @@
 
 ## Technologies used in the project
 - Python
+- Java Script
 - Django
 - Postgresql
 - Docker
 - Docker-compose
+- HTML
+- CSS
 - Git
+- Redis
+- Daphne
 
 ## Local setup
 
@@ -50,4 +55,20 @@ $ sudo docker-compose build
 $ sudo docker-compose up
 ```
 
-**Superuser: username - admin, password - admin.**
+**Go to the middle of the running container in a new terminal window**
+
+```
+$ sudo docker-compose exec web bash
+```
+
+**Perform database migrations**
+
+```
+$ python manage.py migrate
+```
+
+**Create superuser**
+
+```
+$ python manage.py createsuperuser
+```
