@@ -2,7 +2,7 @@
 
 ## Description
 
-**This project is under development and will be completed soon**
+**Chat application is complated**
 
 ## Technologies used in the project
 - Python
